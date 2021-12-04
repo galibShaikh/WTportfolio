@@ -1,0 +1,80 @@
+<html>
+<html>
+<head>
+      
+      <style>
+            .users{
+              border: 1px solid rgb(216, 214, 214);
+              margin: 10px;
+              padding: 5px;
+              border-radius: 5px;
+              background-color: rgb(201, 15, 15);
+              flex-wrap: wrap;
+              display: flex;
+              align-items: center;
+              justify-content:left;
+            }
+            button{
+                  box-shadow: 2px 2px 5px rgb(185, 185, 185);
+                  padding: 20px;
+                  border: 1px solid rgb(211, 211, 211);
+            }
+            button:hover{
+                  background-color: rgb(15, 202, 226);
+                  font-weight: bolder;
+                  cursor:pointer;
+            }
+            .info{
+                  margin-left: 20px;
+                  font-size: 30px;
+                  
+            }
+            .photo{
+                  margin-left: 25px;
+            }
+  
+      </style>
+    <title>Github Users</title>
+</head>
+
+<body >
+
+    <button
+        
+        onclick="loadDoc()"> Load GitHub User</button>
+    <p id="output"></p>
+</body>
+
+<script>
+
+    function loadDoc() {
+        var req = new XMLHttpRequest();
+        req.onload = function () {
+            var people = JSON.parse(req.responseText)
+            var output = ' ';
+            for (var i in people) {
+                output +=
+                    '<div style="background-color: rgb(240, 242, 240);">' +
+                    '<img src="' + people[i].avatar_url + '"width="80px" height="80px"border-radius: "8px">' +
+                    '<ul>' +
+                    '<li>ID: ' + people[i].id + '</li>' +
+                    '<li>Login: ' + people[i].login + '</li>' +
+                    '<li>Repos:' + people[i].repos_url + '</li>' +
+                    '<li>Github Link: ' + people[i].html_url + '</li>' +
+                    '<li>Followers:' + people[i].followers_url + '</li>' +
+                    '<li>Admin:' + people[i].site_admin + '</li>' + 
+                    '<li>Type:' + people[i].type + '</li>' + 
+                    '</ul>' +                  
+                    '</div > </br>' ;
+
+            }
+            console.log(output);
+            document.getElementById("output").innerHTML = output;
+        };
+        req.open("GET", "https://api.github.com/users", true);
+        req.send();
+        return;
+    }
+</script>
+
+</html>
